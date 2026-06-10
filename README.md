@@ -97,9 +97,13 @@ python cli.py serve                              # web API + chat simulator
 Run `python cli.py serve` and open <http://127.0.0.1:8000> to chat with the bot in a
 browser (Arabic RTL UI, source citations, multi-turn memory).
 
-| Welcome screen | Grounded answer with source |
-|:---:|:---:|
-| ![Welcome](docs/simulator-welcome.png) | ![Conversation](docs/simulator-chat.png) |
+<p align="center">
+  <img src="docs/simulator-demo.gif" alt="SDTPS chat simulator demo" width="640">
+</p>
+
+> There is no public live demo on purpose — the bot runs a local 7B LLM (Ollama) +
+> BGE-M3 embeddings, which don't fit free hosting tiers. The GIF above is the demo;
+> clone and `docker compose up` to run it yourself.
 
 ### Web API
 

@@ -1,0 +1,39 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Resolve version
+        id: ver
+        run: echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ github.ref_name }}
+          generate_release_notes: true
+          body: |
+            ## SDTPS Arabic RAG Chatbot ${{ github.ref_name }}
+
+            Fully-local Arabic Q&A RAG over Sharjah town-planning (SDTPS) services:
+            RTL PDF extraction, table-aware chunking, hybrid retrieval
+            (BGE-M3 + BM25 + RRF), multi-turn memory, semantic answer cache, and a
+            FastAPI + chat simulator.
+
+            **Docker image**
+            ```bash
+            docker pull ghcr.io/ziadt160/sdtps-rag-chatbot:${{ steps.ver.outputs.version }}
+            ```
+
+            Changelog below.

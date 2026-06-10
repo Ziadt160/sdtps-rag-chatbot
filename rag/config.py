@@ -51,3 +51,11 @@ DENSE_WEIGHT = float(os.getenv("RAG_DENSE_WEIGHT", "1.0"))
 SPARSE_WEIGHT = float(os.getenv("RAG_SPARSE_WEIGHT", "1.0"))
 # rapidfuzz score (0-100) above which a query is locked to one service via metadata filter
 SERVICE_MATCH_THRESHOLD = float(os.getenv("RAG_SERVICE_MATCH_THRESHOLD", "82"))
+
+
+# Semantic answer cache --------------------------------------------------------
+CACHE_ENABLED = os.getenv("CACHE_ENABLED", "1").lower() in {"1", "true", "yes"}
+CACHE_MAX_SIZE = int(os.getenv("CACHE_MAX_SIZE", "256"))
+# cosine similarity required for a cache hit (high = only near-identical queries)
+CACHE_SIM_THRESHOLD = float(os.getenv("CACHE_SIM_THRESHOLD", "0.97"))
+CACHE_TTL = float(os.getenv("CACHE_TTL", "0"))  # seconds; 0 = no expiry

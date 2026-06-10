@@ -1,0 +1,13 @@
+# Runtime dependencies for serving (used by the Docker image).
+# NOTE: torch is installed separately (CPU build) in the Dockerfile so that
+# sentence-transformers does not pull the large CUDA build.
+sentence-transformers>=5.5
+numpy>=2.0
+rank-bm25>=0.2.2
+rapidfuzz>=3.9
+pymupdf>=1.24
+langchain-ollama>=0.2
+langchain-core>=0.3
+python-dotenv>=1.0
+fastapi>=0.115
+uvicorn>=0.30

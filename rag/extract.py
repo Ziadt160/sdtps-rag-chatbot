@@ -37,7 +37,7 @@ def _reconstruct_line(words: list[tuple]) -> str:
     return " ".join(out)
 
 
-def extract_page(page: "fitz.Page") -> str:
+def extract_page(page: fitz.Page) -> str:
     words = page.get_text("words")  # (x0,y0,x1,y1,word,block,line,word_no)
     if not words:
         return ""

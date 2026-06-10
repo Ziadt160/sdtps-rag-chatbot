@@ -1,8 +1,10 @@
-"""End-to-end RAG chatbot: rewrite -> retrieve -> generate (grounded, in Arabic)."""
+"""End-to-end RAG chatbot: rewrite -> (cache) -> retrieve -> generate (grounded, Arabic)."""
 from __future__ import annotations
 
 from dataclasses import dataclass, field
 
+from . import config
+from .cache import SemanticCache
 from .embeddings import get_embedder
 from .index import Index, load_index
 from .llm import LLM, get_llm
@@ -23,6 +25,7 @@ class Answer:
     sources: list[dict] = field(default_factory=list)
     contexts: list[str] = field(default_factory=list)
     query_used: str = ""
+    cached: bool = False
 
 
 def _format_context(results: list[Retrieved]) -> str:
@@ -38,21 +41,61 @@ class RAGChatbot:
         index: Index | None = None,
         retriever: HybridRetriever | None = None,
         llm: LLM | None = None,
+        cache: SemanticCache | None = None,
     ):
         self.index = index or load_index()
         self.retriever = retriever or HybridRetriever(self.index, get_embedder())
         self.llm = llm or get_llm()
+        if cache is not None:
+            self.cache = cache
+        elif config.CACHE_ENABLED:
+            self.cache = SemanticCache(
+                self.retriever.embedder,
+                max_size=config.CACHE_MAX_SIZE,
+                threshold=config.CACHE_SIM_THRESHOLD,
+                ttl=config.CACHE_TTL,
+            )
+        else:
+            self.cache = None
+
+    def _remember(
+        self,
+        memory: ConversationMemory | None,
+        question: str,
+        answer_text: str,
+        sources: list[dict],
+    ) -> None:
+        if memory is None:
+            return
+        memory.add_user(question)
+        memory.add_assistant(answer_text)
+        if sources:
+            memory.last_service_id = sources[0].get("service_id")
+            memory.last_service_name = sources[0].get("service_name")
 
     def ask(
         self, question: str, memory: ConversationMemory | None = None, k: int | None = None
     ) -> Answer:
-        # 1. history-aware rewrite (only meaningful when memory has prior turns)
+        # 1. history-aware rewrite (rewrite_query is a no-op on the first turn)
         query = memory.rewrite_query(self.llm, question) if memory else question
 
-        # 2. hybrid retrieval (service-name filter + dense + BM25)
+        # 2. semantic cache lookup on the standalone query
+        if self.cache is not None:
+            hit = self.cache.get(query)
+            if hit is not None:
+                self._remember(memory, question, hit["answer"], hit["sources"])
+                return Answer(
+                    answer=hit["answer"],
+                    sources=hit["sources"],
+                    contexts=hit["contexts"],
+                    query_used=query,
+                    cached=True,
+                )
+
+        # 3. hybrid retrieval (service-name filter + dense + BM25)
         results = self.retriever.retrieve(query, k=k)
 
-        # 3. grounded generation
+        # 4. grounded generation
         context = _format_context(results)
         user = f"السياق:\n{context}\n\nالسؤال: {question}"
         answer_text = self.llm.complete(_SYSTEM, user)
@@ -66,19 +109,13 @@ class RAGChatbot:
             }
             for r in results
         ]
+        contexts = [r.chunk.text for r in results]
 
-        # 4. update memory
-        if memory is not None:
-            memory.add_user(question)
-            memory.add_assistant(answer_text)
-            if results:
-                top = results[0].chunk.metadata
-                memory.last_service_id = top.get("service_id")
-                memory.last_service_name = top.get("service_name")
+        # 5. cache + memory
+        if self.cache is not None:
+            self.cache.put(query, {"answer": answer_text, "sources": sources, "contexts": contexts})
+        self._remember(memory, question, answer_text, sources)
 
         return Answer(
-            answer=answer_text,
-            sources=sources,
-            contexts=[r.chunk.text for r in results],
-            query_used=query,
+            answer=answer_text, sources=sources, contexts=contexts, query_used=query, cached=False
         )

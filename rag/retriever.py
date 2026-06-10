@@ -33,7 +33,7 @@ class Retrieved:
 def _rrf(rankings: list[list[int]], weights: list[float], k: int) -> dict[int, float]:
     """Reciprocal Rank Fusion. rankings: lists of doc indices best-first."""
     scores: dict[int, float] = {}
-    for ranking, w in zip(rankings, weights):
+    for ranking, w in zip(rankings, weights, strict=False):
         for rank, idx in enumerate(ranking):
             scores[idx] = scores.get(idx, 0.0) + w / (k + rank + 1)
     return scores

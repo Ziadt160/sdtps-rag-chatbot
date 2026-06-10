@@ -54,6 +54,7 @@
   .meta { font-size: 12px; color: var(--muted); margin-top: 7px; padding-top: 7px; border-top: 1px dashed var(--line); }
   .meta .src { color: var(--accent); }
   .meta .rewrite { display: block; margin-top: 3px; opacity: .8; }
+  .meta .cached { color: #fbbf24; margin-inline-start: 8px; }
   .err .bubble { background: #3a1d22; color: var(--danger); }
 
   .welcome { color: var(--muted); text-align: center; margin: auto 0; }
@@ -171,6 +172,7 @@ function addMeta(bubble, data) {
   meta.className = "meta";
   let html = `المصدر: <span class="src">${src.service_name || "—"}</span>`;
   if (src.page != null) html += ` (صفحة ${src.page})`;
+  if (data.cached) html += `<span class="cached">⚡ من الذاكرة المؤقتة</span>`;
   if (data.query_used && data.query_used.trim() && data.query_used.trim() !== bubble.dataset.q) {
     html += `<span class="rewrite">↻ ${data.query_used}</span>`;
   }

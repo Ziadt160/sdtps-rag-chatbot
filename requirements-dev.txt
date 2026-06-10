@@ -1,0 +1,8 @@
+# Lint + unit-test dependencies for CI (no heavy ML/serving deps required —
+# the tested modules import these lazily).
+ruff>=0.6
+pytest>=8.0
+numpy>=2.0
+rapidfuzz>=3.9
+rank-bm25>=0.2.2
+pymupdf>=1.24

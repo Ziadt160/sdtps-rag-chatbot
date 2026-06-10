@@ -68,6 +68,7 @@ class ChatResponse(BaseModel):
     answer: str
     query_used: str
     sources: list[Source]
+    cached: bool = False
 
 
 class ResetRequest(BaseModel):
@@ -91,6 +92,7 @@ def health() -> dict:
         "embed_model": config.EMBED_MODEL,
         "index_size": _BOT.index.size if _BOT else 0,
         "active_sessions": len(_STATE),
+        "cache": _BOT.cache.stats() if (_BOT and _BOT.cache) else None,
     }
 
 
@@ -113,6 +115,7 @@ def chat(req: ChatRequest) -> ChatResponse:
         answer=ans.answer,
         query_used=ans.query_used,
         sources=[Source(**s) for s in ans.sources],
+        cached=ans.cached,
     )
 
 

@@ -1,0 +1,25 @@
+{"id": "q01", "question": "ما هي الوثائق المطلوبة للنماذج المعتمدة مسبقاً للتصاميم السكنية؟", "service_ids": ["svc-01"], "reference": null}
+{"id": "q02", "question": "كيف أطلب مخطط ورقي لمدينة الشارقة؟", "service_ids": ["svc-02"], "reference": null}
+{"id": "q03", "question": "ماذا أحتاج للحصول على الموافقة على مسار الخدمات الأساسية؟", "service_ids": ["svc-04"], "reference": null}
+{"id": "q04", "question": "كيف أحصل على عدم ممانعة لهدم عقار؟", "service_ids": ["svc-05", "svc-12"], "reference": null}
+{"id": "q05", "question": "أريد طلب معاينة موقع أرض، ما الإجراءات؟", "service_ids": ["svc-13"], "reference": null}
+{"id": "q06", "question": "ما هي خدمة تحديد نطاق الإنترلوك؟", "service_ids": ["svc-11"], "reference": null}
+{"id": "q07", "question": "كيف أطلب إحداثيات للطيران المدني؟", "service_ids": ["svc-18"], "reference": null}
+{"id": "q08", "question": "ما متطلبات اعتماد التصاميم المبدئية للمباني الصناعية؟", "service_ids": ["svc-19"], "reference": null}
+{"id": "q09", "question": "كيف يتم اعتماد التصاميم المبدئية للمنشآت التجارية؟", "service_ids": ["svc-20"], "reference": null}
+{"id": "q10", "question": "ما هي معاملات الإفراز الطابقي؟", "service_ids": ["svc-21"], "reference": null}
+{"id": "q11", "question": "كيف أصدر خارطة دمج للأراضي؟", "service_ids": ["svc-22"], "reference": null}
+{"id": "q12", "question": "أريد طلب بيان التخطيط العمراني", "service_ids": ["svc-26"], "reference": null}
+{"id": "q13", "question": "ما إجراءات ضم أرض إلى أرض أخرى؟", "service_ids": ["svc-27"], "reference": null}
+{"id": "q14", "question": "كيف أستأجر موقعاً مؤقتاً؟", "service_ids": ["svc-28"], "reference": null}
+{"id": "q15", "question": "أريد تحويل استخدام عقار سكني إلى استخدام تجاري", "service_ids": ["svc-29"], "reference": null}
+{"id": "q16", "question": "ما هي شهادة عدم الممانعة NOC؟", "service_ids": ["svc-31"], "reference": null}
+{"id": "q17", "question": "كيف أستثمر أرضاً كمواقف للسيارات؟", "service_ids": ["svc-32"], "reference": null}
+{"id": "q18", "question": "كيف أصدر أو أجدد خارطة رسمية؟", "service_ids": ["svc-33"], "reference": null}
+{"id": "q19", "question": "أريد تجديد خارطة منحة", "service_ids": ["svc-35"], "reference": null}
+{"id": "q20", "question": "كيف أحصل على شهادة إفادة بالأراضي الممنوحة؟", "service_ids": ["svc-37"], "reference": null}
+{"id": "q21", "question": "ما هو تصريح السياج للأراضي الزراعية؟", "service_ids": ["svc-40"], "reference": null}
+{"id": "q22", "question": "كيف أطلب بيانات موقع للاستخدام الحكومي؟", "service_ids": ["svc-41"], "reference": null}
+{"id": "q23", "question": "ما رقم الهاتف للتواصل بخصوص طلب معاينة موقع أرض؟", "service_ids": ["svc-13"], "reference": "رقم الهاتف هو 06-5289999."}
+{"id": "q24", "question": "كيف أطلب تعويضاً عن أرض أو بناء؟", "service_ids": ["svc-03"], "reference": null}
+{"id": "q25", "question": "أريد تأجير موقع مؤقت وتجديد العقد لاحقاً", "service_ids": ["svc-28", "svc-36"], "reference": null}

@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.cache/
+
+# Secrets / local config
+.env
+
+# Generated RAG artifacts (recreate with `python cli.py index`)
+data/services.jsonl
+data/index/
+
+# Model / HF caches
+.cache/
+*.safetensors
+*.bin
+
+# Editor / agent tooling
+.claude/
+.idea/
+.vscode/
+
+# Scratch / experiments
+scratch/
+
+# OS
+.DS_Store
+Thumbs.db

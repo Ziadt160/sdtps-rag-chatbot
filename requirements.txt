@@ -1,0 +1,31 @@
+# Arabic Q&A RAG chatbot (SDTPS) — fully local stack.
+# Tested on Python 3.14 with an NVIDIA GPU (CUDA). See README.md for setup.
+
+# --- core RAG ---
+sentence-transformers>=5.5         # BGE-M3 embeddings
+torch>=2.6                         # install the CUDA build for GPU; see pytorch.org
+numpy>=2.0
+rank-bm25>=0.2.2                   # sparse lexical retrieval
+rapidfuzz>=3.9                     # service-name fuzzy matching / metadata filter
+pymupdf>=1.24                      # RTL-correct PDF extraction (import name: fitz)
+
+# --- LLM (local via Ollama) ---
+langchain-ollama>=0.2
+langchain-core>=0.3
+
+# --- text splitting / utils ---
+langchain-text-splitters>=0.3
+python-dotenv>=1.0
+
+# --- web API + chat simulator ---
+fastapi>=0.115
+uvicorn>=0.30
+
+# --- evaluation ---
+ragas>=0.2                         # answer-quality metrics (local judges)
+datasets>=2.19
+
+# --- optional fallbacks (RTL / Arabic shaping) ---
+python-bidi>=0.4
+arabic-reshaper>=3.0
+pypdf>=4.0                         # extraction fallback if PyMuPDF unavailable
